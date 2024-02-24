@@ -4,8 +4,8 @@ using Business.Concrete;
 using Business.Requests.Brand;
 using Business.Responses.Brand;
 using DataAccess.Abstract;
-using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,16 +15,26 @@ namespace WebAPI.Controllers;
 [ApiController]
 public class BrandsController : ControllerBase
 {
-    private readonly IBrandService _brandService; 
+    private readonly IBrandService _brandService; // Field
 
     public BrandsController(IBrandService brandService)
-    {    
+    {
+        // Her HTTP Request için yeni bir Controller nesnesi oluşturulur.
         _brandService = brandService;
+        // Daha sonra IoC Container yapımızı kurduğumuz Dependency Injection ile daha verimli hale getiricez.
     }
 
-   
+
+
+    //[HttpGet]
+    //public ActionResult<string> //IActionResult
+    //GetList()
+    //{
+    //    return Ok("BrandsController");
+    //}
+    [Authorize(Roles = "Editor")] // Controller içerisinde kullanılır.
     [HttpGet] // GET http://localhost:5245/api/brands
-    public GetBrandListResponse GetList([FromQuery] GetBrandListRequest request) 
+    public GetBrandListResponse GetList([FromQuery] GetBrandListRequest request) // Referans tipleri varsayılan olarak request body'den alır.
     {
         GetBrandListResponse response = _brandService.GetList(request);
         return response; // JSON
@@ -32,8 +42,10 @@ public class BrandsController : ControllerBase
 
     //[HttpPost("/add")] // POST http://localhost:5245/api/brands/add
     [HttpPost] // POST http://localhost:5245/api/brands
+    //[Authorize] // Controller içerisinde kullanılır.
     public ActionResult<AddBrandResponse> Add(AddBrandRequest request)
     {
+        // Log kodları
         try
         {
             AddBrandResponse response = _brandService.Add(request);
