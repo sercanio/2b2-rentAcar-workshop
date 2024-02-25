@@ -6,9 +6,9 @@ namespace Business.BusinessRules
 {
     public class CustomersBusinessRules
     {
-        private readonly ICustomersDal _customersDal;
+        private readonly ICustomerDal _customersDal;
 
-        public CustomersBusinessRules(ICustomersDal customersDal)
+        public CustomersBusinessRules(ICustomerDal customersDal)
         {
             _customersDal = customersDal;
         }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCustomersDal : EfEntityRepositoryBase<Customers, int, RentACarContext>, ICustomersDal
+    public class EfCustomersDal : EfEntityRepositoryBase<Customers, int, RentACarContext>, ICustomerDal
     {
         public EfCustomersDal(RentACarContext context) : base(context)
         {

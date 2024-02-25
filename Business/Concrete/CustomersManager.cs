@@ -10,11 +10,11 @@ namespace Business.Concrete
 {
     public class CustomersManager : ICustomersService
     {
-        private readonly ICustomersDal _customersDal;
+        private readonly ICustomerDal _customersDal;
         private readonly CustomersBusinessRules _customersBusinessRules;
         private IMapper _mapper;
 
-        public CustomersManager(ICustomersDal customersDal, CustomersBusinessRules customersBusinessRules, IMapper mapper)
+        public CustomersManager(ICustomerDal customersDal, CustomersBusinessRules customersBusinessRules, IMapper mapper)
         {
             _customersDal = customersDal;
             _customersBusinessRules = customersBusinessRules;

@@ -22,7 +22,6 @@ namespace Core.DataAccess.EntityFramework
 
         public TEntity Add(TEntity entity)
         {
-            entity.CreatedAt = DateTime.UtcNow;
             Context.Add(entity);
             Context.SaveChanges();
             return entity;
@@ -56,7 +55,6 @@ namespace Core.DataAccess.EntityFramework
 
         public TEntity Update(TEntity entity)
         {
-            entity.UpdateAt = DateTime.UtcNow;
             Context.Update(entity);
             Context.SaveChanges();
             return entity;

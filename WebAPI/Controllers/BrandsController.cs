@@ -3,6 +3,7 @@ using Business.Abstract;
 using Business.Concrete;
 using Business.Requests.Brand;
 using Business.Responses.Brand;
+using Core.CrossCuttingConcerns;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -32,12 +33,13 @@ public class BrandsController : ControllerBase
     //{
     //    return Ok("BrandsController");
     //}
-    [Authorize(Roles = "Editor")] // Controller içerisinde kullanılır.
     [HttpGet] // GET http://localhost:5245/api/brands
-    public GetBrandListResponse GetList([FromQuery] GetBrandListRequest request) // Referans tipleri varsayılan olarak request body'den alır.
+    public ActionResult<ServiceResult<GetBrandListResponse>> GetList([FromQuery] GetBrandListRequest request) // Referans tipleri varsayılan olarak request body'den alır.
     {
-        GetBrandListResponse response = _brandService.GetList(request);
-        return response; // JSON
+        ServiceResult<GetBrandListResponse> response = _brandService.GetList(request);
+        if (response.IsSuccess)
+           return Ok(response); // JSON
+        return Unauthorized(response);
     }
 
     //[HttpPost("/add")] // POST http://localhost:5245/api/brands/add
@@ -48,7 +50,7 @@ public class BrandsController : ControllerBase
         // Log kodları
         try
         {
-            AddBrandResponse response = _brandService.Add(request);
+            ServiceResult<AddBrandResponse> response = _brandService.Add(request);
 
             //return response; // 200 OK
             return CreatedAtAction(nameof(GetList), response); // 201 Created
