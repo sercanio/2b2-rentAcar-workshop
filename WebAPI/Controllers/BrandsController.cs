@@ -51,9 +51,9 @@ public class BrandsController : ControllerBase
         try
         {
             ServiceResult<AddBrandResponse> response = _brandService.Add(request);
-
-            //return response; // 200 OK
-            return CreatedAtAction(nameof(GetList), response); // 201 Created
+            if (response.IsSuccess)
+                return CreatedAtAction(nameof(GetList), response); // 201 Created
+            return Unauthorized(response);
         }
         catch (Core.CrossCuttingConcerns.Exceptions.BusinessException exception)
         {

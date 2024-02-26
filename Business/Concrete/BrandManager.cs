@@ -51,7 +51,7 @@ public class BrandManager : IBrandService
             };
         }
 
-        if (!_httpContextAccessor.HttpContext.User.HasClaim(c => c.Type == ClaimTypes.Role && (c.Value == "Editor" || c.Value == "Admin")))
+        if (!_httpContextAccessor.HttpContext.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "3")) // 3: Admin
         {
             return new ServiceResult<AddBrandResponse>
             {
@@ -91,7 +91,7 @@ public class BrandManager : IBrandService
             };
         }
 
-        if (!_httpContextAccessor.HttpContext.User.HasClaim(c => c.Type == ClaimTypes.Role && (c.Value == "2" || c.Value == "3")))
+        if (!_httpContextAccessor.HttpContext.User.HasClaim(c => c.Type == ClaimTypes.Role && (c.Value == "2" || c.Value == "3"))) // 2: Editor, 3: Admin
         {
             return new ServiceResult<GetBrandListResponse>
             {
